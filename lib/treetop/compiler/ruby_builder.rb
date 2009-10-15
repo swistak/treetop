@@ -25,8 +25,9 @@ module Treetop
         self.out(depth)
       end
             
-      def class_declaration(name, &block)
+      def class_declaration(name, parent_class=nil, &block)
         self << "class #{name}"
+        self << " < #{parent_class}" if parent_class && !parent_class.empty?
         indented(&block)
         self << "end"
       end
@@ -101,6 +102,22 @@ module Treetop
       
       def reset_addresses
         address_space.reset_addresses
+      end
+
+      def instantiate_node(node_class_name, left, right, *rest)
+        "instantiate_node(#{node_class_name}, input, (#{left})...(#{right}) #{rest.empty? ? "" : ","+rest.join(",")})"
+      end
+
+      def do_include(module_name)
+        "include #{module_name}"
+      end
+
+      def terminal_parse_failure(on_what)
+        "terminal_parse_failure(\"#{on_what}\")"
+      end
+
+      def has_terminal?(text_value, tf)
+        "has_terminal?(#{text_value}, #{tf}, index)"
       end
       
       private

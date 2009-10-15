@@ -22,7 +22,11 @@ module Treetop
       end
       
       def decorated?
-        parent_expression && (parent_expression.node_class_name || parent_expression.node_class_name || parent_expression.inline_module_name)
+        parent_expression && (
+          parent_expression.node_class_name ||
+            parent_expression.node_class_name ||
+            parent_expression.inline_module_name
+        )
       end
       
       def optional_arg(arg)
@@ -87,7 +91,7 @@ module Treetop
       end
       
       def epsilon_node
-        "instantiate_node(SyntaxNode,input, index...index)"
+        instantiate_node("SyntaxNode", "index", "index")
       end
       
       def assign_failure(start_index_var)
